@@ -1,0 +1,53 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build / caches
+dist/
+build/
+out/
+.next/
+.vite/
+.parcel-cache/
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+coverage-final.json
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Packages
+*.tgz
+
+# Misc
+/.pnp
+.pnp.js
+```// filepath: c:\Users\Vinicius\Documents\repos\f1-statistics\.gitignore
+# Node
+node_modules/
