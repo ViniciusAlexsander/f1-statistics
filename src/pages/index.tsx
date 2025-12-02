@@ -8,7 +8,7 @@ export default function Home() {
   if (!data || data.meetings.length === 0)
     return <div>Nenhum dado encontrado</div>;
 
-  const { meetings, positions } = data;
+  const { meetings, sessionResults } = data;
 
   return (
     <div style={{ padding: "20px" }}>
@@ -41,18 +41,25 @@ export default function Home() {
         ))}
       </div>
       <div>
-        <h2>Posições Atuais</h2>
+        <h2>Resultados</h2>
         <div style={{ display: "grid", gap: "16px" }}>
-          {positions.map((position) => (
-            <div key={position.driver_number + position.position}>
+          {sessionResults.map((result) => (
+            <div key={result.driver_number + result.position}>
               <p>
-                <strong>Número do piloto:</strong> {position.driver_number}
+                <strong>Número do piloto:</strong> {result.driver_number}
+              </p>
+              {result.dnf ? (
+                <p>Status: DNF (Did Not Finish)</p>
+              ) : (
+                <p>
+                  <strong>Posição atual:</strong> {result.position}
+                </p>
+              )}
+              <p>
+                <strong>Quantidade de voltas:</strong> {result.number_of_laps}
               </p>
               <p>
-                <strong>Posição atual:</strong> {position.position}
-              </p>
-              <p>
-                <strong>Código:</strong> {position.meeting_key}
+                <strong>Código:</strong> {result.meeting_key}
               </p>
             </div>
           ))}

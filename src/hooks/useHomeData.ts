@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { IMeeting } from "../types/meetings";
-import { IPosition } from "../types/position";
+import { ISessionResults } from "../types/sessionResults";
 
 const MEETING_KEY = "latest";
 
@@ -14,11 +14,11 @@ export async function getLatestMeeting(
   return data;
 }
 
-export async function getLatestPosition(
-  meeting_key: string
-): Promise<IPosition[]> {
+export async function getSessionResults(
+  session_key: string
+): Promise<ISessionResults[]> {
   const { data } = await api.get(
-    `https://api.openf1.org/v1/position?meeting_key=${meeting_key}`
+    `https://api.openf1.org/v1/session_result?session_key=${session_key}`
   );
   return data;
 }
@@ -26,7 +26,7 @@ export async function getLatestPosition(
 export function useHomeData() {
   const [data, setData] = useState<{
     meetings: IMeeting[];
-    positions: IPosition[];
+    sessionResults: ISessionResults[];
   }>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -34,10 +34,10 @@ export function useHomeData() {
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([getLatestMeeting(MEETING_KEY), getLatestPosition(MEETING_KEY)])
-      .then(([meetings, positions]) => {
+    Promise.all([getLatestMeeting(MEETING_KEY), getSessionResults(MEETING_KEY)])
+      .then(([meetings, sessionResults]) => {
         if (mounted) {
-          setData({ meetings, positions });
+          setData({ meetings, sessionResults });
         }
       })
       .catch((err) => mounted && setError(err))
