@@ -12,7 +12,6 @@ export default function Home() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Informações sobre a </h1>
       <div style={{ display: "grid", gap: "16px" }}>
         {meetings.map((meeting) => (
           <div
@@ -42,17 +41,19 @@ export default function Home() {
         ))}
       </div>
       <div>
-        <h1>Posições Atuais</h1>
+        <h2>Posições Atuais</h2>
         <div style={{ display: "grid", gap: "16px" }}>
           {positions.map((position) => (
             <div key={position.driver_number + position.position}>
-              <h2>{position.driver_number}</h2>
+              <p>
+                <strong>Número do piloto:</strong> {position.driver_number}
+              </p>
               <p>
                 <strong>Posição atual:</strong> {position.position}
               </p>
               <p>
                 <strong>Código:</strong> {position.meeting_key}
-              </p>{" "}
+              </p>
             </div>
           ))}
         </div>
