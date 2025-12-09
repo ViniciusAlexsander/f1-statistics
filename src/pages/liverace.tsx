@@ -40,15 +40,15 @@ export default function LiveRace() {
     };
   }
 
-  const drivers = [...new Set([...positions.map((p) => p.driver_number)])].sort(
-    (a, b) => {
-      const posA =
-        positions.find((p) => p.driver_number === a)?.position ?? Infinity;
-      const posB =
-        positions.find((p) => p.driver_number === b)?.position ?? Infinity;
-      return posA - posB;
-    }
-  );
+  // const drivers = [...new Set([...positions.map((p) => p.driver_number)])].sort(
+  //   (a, b) => {
+  //     const posA =
+  //       positions.find((p) => p.driver_number === a)?.position ?? Infinity;
+  //     const posB =
+  //       positions.find((p) => p.driver_number === b)?.position ?? Infinity;
+  //     return posA - posB;
+  //   }
+  // );
 
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
