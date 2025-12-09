@@ -43,23 +43,39 @@ export default function Home() {
       <div>
         <h2>Resultados</h2>
         <div style={{ display: "grid", gap: "16px" }}>
-          {sessionResults.map((result) => (
-            <div key={result.driver_number + result.position}>
+          {sessionResults.map(({ driverInfo, result }) => (
+            <div
+              key={result.driver_number + result.position}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <div>
+                {result.dnf ? (
+                  <p>
+                    <strong>DNF</strong>
+                  </p>
+                ) : (
+                  <strong>{result.position}</strong>
+                )}
+              </div>
+              <div
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "8px",
+                  borderRadius: "8px",
+                  backgroundColor: `#${driverInfo.team_colour}`,
+                  minWidth: "40px",
+                  textAlign: "center",
+                }}
+              >
+                <strong>{driverInfo.name_acronym}</strong>
+              </div>
+              <p>+{result.gap_to_leader}</p>
               <p>
-                <strong>Número do piloto:</strong> {result.driver_number}
-              </p>
-              {result.dnf ? (
-                <p>Status: DNF (Did Not Finish)</p>
-              ) : (
-                <p>
-                  <strong>Posição atual:</strong> {result.position}
-                </p>
-              )}
-              <p>
-                <strong>Quantidade de voltas:</strong> {result.number_of_laps}
-              </p>
-              <p>
-                <strong>Código:</strong> {result.meeting_key}
+                <strong>Lap: {result.number_of_laps}</strong>
               </p>
             </div>
           ))}

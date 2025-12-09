@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { fetchDrivers } from "../services/raceResultsService";
+import { IDriver } from "../types/driver";
 import { IMeeting } from "../types/meetings";
 import { ISessionResults } from "../types/sessionResults";
 
@@ -26,7 +28,7 @@ export async function getSessionResults(
 export function useHomeData() {
   const [data, setData] = useState<{
     meetings: IMeeting[];
-    sessionResults: ISessionResults[];
+    sessionResults: { result: ISessionResults; driverInfo: IDriver }[];
   }>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -34,10 +36,18 @@ export function useHomeData() {
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([getLatestMeeting(MEETING_KEY), getSessionResults(MEETING_KEY)])
-      .then(([meetings, sessionResults]) => {
+    Promise.all([
+      getLatestMeeting(MEETING_KEY),
+      getSessionResults(MEETING_KEY),
+      fetchDrivers(),
+    ])
+      .then(([meetings, sessionResults, drivers]) => {
         if (mounted) {
-          setData({ meetings, sessionResults });
+          const sessionResultsWithDriverInfo = mergeDriveInfo(
+            sessionResults,
+            drivers
+          );
+          setData({ meetings, sessionResults: sessionResultsWithDriverInfo });
         }
       })
       .catch((err) => mounted && setError(err))
@@ -50,3 +60,15 @@ export function useHomeData() {
 
   return { data, isLoading, error };
 }
+
+const mergeDriveInfo = (results: ISessionResults[], drivers: IDriver[]) => {
+  return results.map((result) => {
+    const driverInfo = drivers.find(
+      (driver) => driver.driver_number === result.driver_number
+    );
+    return {
+      result,
+      driverInfo,
+    };
+  });
+};
